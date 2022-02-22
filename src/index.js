@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App';
 
 //1. Create a new React app.
 //2. Create a App.jsx component.
@@ -15,6 +16,6 @@ import ReactDOM from 'react-dom';
 //HINT: You will need to study the classes in teh styles.css file to appy styling.
 
 ReactDOM.render(
-  <h1>Hello World!</h1>,
+  <App />,
   document.getElementById("root")
 );
