@@ -1,5 +1,5 @@
 import React from 'react';
-import notesValues from "../notes";
+import notes from "../notes";
 import Card from "./Card";
 
 //5. Create a Note.jsx component to show a <div> element with a
@@ -11,7 +11,7 @@ import Card from "./Card";
 function Note() {
     return (
       <div>
-        {notesValues.map( (noteTerm) => (
+        {notes.map( (noteTerm) => (
           <Card
             key={noteTerm.id}
             title={noteTerm.title}
