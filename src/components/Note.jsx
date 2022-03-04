@@ -1,14 +1,24 @@
 import React from 'react';
+import notesValues from "../notes";
+import Card from "./Card";
 
 //5. Create a Note.jsx component to show a <div> element with a
 //<h1> for a title and a <p> for the content.
 
+//Challenge. Render all the notes inside notes.js as a seperate Note
+//component.
+
 function Note() {
     return (
-        <div class="note">
-            <h1>This is the note title</h1>
-            <p>This is the note content</p>
-        </div>
+      <div>
+        {notesValues.map( (noteTerm) => (
+          <Card
+            key={noteTerm.id}
+            title={noteTerm.title}
+            content={noteTerm.content}
+          />
+        ))}
+      </div>
     );
 }
 
