@@ -1,27 +1,36 @@
 import React from "react";
 
-//Challenge:
-//1. Implement the "add note" functionality
-//- create a constant that keeps track of the title and content
-//- Pass the new note back to the App
-//- Add new note to an array
-//- Take array and render separate Note components for each line
-
-//2. Implement the delete note functionality
-//- Callback from the Note component to trigger a delete function
-//- Use the filter function to filter out the item that needs deletion
-//- Pass an id over to the Note component, then
-//pass it back to the App when deleting
-
-//This is the end result you're aiming for:
-//https://pogqj.csb.app/
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// The Purpose of This Component:
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//
+// (1.) To take as input and render objects passed to this component
+// (2.) And send upwards a callback function to parent component
+// (3.) The callback function is to delete from the parent component
+//      the object whose values were passed as props into this child component
+//
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function Note(props) {
   return (
     <div className="note">
-      <h1>{props.title}</h1>
-      <p>{props.content}</p>
-      <button>DELETE</button>
+      <h1>{(props.title !== "") ? props.title : "Note Title"}</h1>
+      <p>{(props.content !== "") ? props.content : "Note Content"}</p>
+      <button
+      onClick= {
+        // Call function to pass state change upwards
+        (event) => {
+          // Prevent refresh
+          event.preventDefault();
+
+          // Pass id upwards to parent's deleteHandler function
+          props.onDelete(
+            props.id
+          );
+
+        }
+      }
+      >DELETE</button>
     </div>
   );
 }
