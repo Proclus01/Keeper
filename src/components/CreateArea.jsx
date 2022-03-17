@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import Fab from '@mui/material/Fab';
+import { Zoom } from '@mui/material';
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // The Purpose of This Component:
@@ -18,6 +21,16 @@ function CreateArea(props) {
     content: ""
   });
 
+  // Create state for Zoom component's 'in' prop
+  // Default value is false to hide component
+  const [inProp, setInProp] = useState(false);
+
+  // Manage Zoom component's in prop state
+  // OnClick will set 'in' to true to reveal compnoent
+  function inTransition() {
+    setInProp(true);
+  }
+
   // Declare event handler for events from <input> and <textarea>
   function handleInput(event) {
     // Prevent refresh
@@ -34,32 +47,39 @@ function CreateArea(props) {
     );
   }
 
+  // Call function to pass state upwards
+  // Event handler of parent component will catch this state and store in an array
+  function handleClick(event) {
+      // Prevent refresh
+      event.preventDefault();
+
+      // Take props from CreateArea and pass noteState upwards to parent
+      props.onAdd(noteState);
+
+      // Reset input text when button is clicked
+      setNoteState(
+        {
+          title: "",
+          content: ""
+        }
+      );
+  }
+
+
+
   return (
     <div>
-      <form>
-        <input onChange={handleInput} value={noteState.title} name="title" placeholder="Title" />
-        <textarea onChange={handleInput} value={noteState.content} name="content" placeholder="Take a note..." rows="3" />
-        <button
-          onClick= {
-            // Call function to pass state upwards
-            // Event handler of parent component will catch this state and store in an array
-            (event) => {
-              // Prevent refresh
-              event.preventDefault();
+      <form className="create-note">
+        {inProp && (
+          <input  onChange={handleInput} value={noteState.title} name="title" placeholder="Title"/>
+        )}
+        <textarea onClick={inTransition} onChange={handleInput} value={noteState.content} name="content" placeholder="Take a note..." rows={(inProp) ? "3" : "1"} />
 
-              // Take props from CreateArea and pass noteState upwards to parent
-              props.onAdd(noteState);
-
-              // Reset input text when button is clicked
-              setNoteState(
-                {
-                  title: "",
-                  content: ""
-                }
-              );
-            }
-          }
-          >Add</button>
+        <Zoom in={inProp}>
+          <Fab onClick= {handleClick}>
+            <AddIcon />
+          </Fab>
+        </Zoom>
       </form>
     </div>
   );

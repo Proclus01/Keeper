@@ -1,4 +1,5 @@
 import React from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // The Purpose of This Component:
@@ -11,26 +12,28 @@ import React from "react";
 //
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
 function Note(props) {
+
+  // Call function to pass state change upwards
+  function handleDeleteClick(event) {
+    // Prevent refresh
+    event.preventDefault();
+
+    // Pass id upwards to parent's deleteHandler function
+    props.onDelete(
+      props.id
+    );
+  }
+
   return (
     <div className="note">
       <h1>{(props.title !== "") ? props.title : "Note Title"}</h1>
       <p>{(props.content !== "") ? props.content : "Note Content"}</p>
-      <button
-      onClick= {
-        // Call function to pass state change upwards
-        (event) => {
-          // Prevent refresh
-          event.preventDefault();
-
-          // Pass id upwards to parent's deleteHandler function
-          props.onDelete(
-            props.id
-          );
-
-        }
-      }
-      >DELETE</button>
+      <button onClick= {handleDeleteClick} >
+        <DeleteIcon />
+      </button>
     </div>
   );
 }
